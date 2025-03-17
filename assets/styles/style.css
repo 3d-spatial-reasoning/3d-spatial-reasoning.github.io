@@ -1,0 +1,195 @@
+.subgrid {
+  grid-column: screen;
+  display: grid;
+  grid-template-columns: inherit;
+  grid-template-rows: inherit;
+  grid-column-gap: inherit;
+  grid-row-gap: inherit;
+}
+
+d-figure.base-grid {
+  grid-column: screen;
+  background: hsl(0, 0%, 97%);
+  padding: 20px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.link-container {
+  display: flex;
+  justify-content: center; /* This centers the links in the container */
+  padding: 5px; /* Add some space around the links */
+}
+button.is-rounded{
+    border-radius:290486px;
+    padding-left:calc(1em + .25em);
+    padding-right:calc(1em + .25em)
+}
+button.is-normal{font-size:1rem}
+.styled-link {
+  background-color: #b0b0b0;
+  border: none;
+  color: black;
+  padding: 5px 20px; /* Vertical and horizontal padding */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px; /* Spacing between links */
+  cursor: pointer;
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 4px #999; /* Simple box shadow */
+  transition-duration: 0.4s; /* Smooth transition for hover effect */
+}
+
+.styled-link:hover {
+  background-color: #FFEC8B; /* Lighter gold color for hover effect */
+  box-shadow: 0 2px #666; /* Shadow effect for hover */
+  transform: translateY(-2px); /* Slight lift when hovered */
+}
+
+
+.shaded-figure {
+  background-color: hsl(0, 0%, 97%);
+  border-top: 1px solid hsla(0, 0%, 0%, 0.1);
+  border-bottom: 1px solid hsla(0, 0%, 0%, 0.1);
+  padding: 30px 0;
+}
+
+.pointer {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  top: 26px;
+  left: -48px;
+}
+
+#slider-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%; /* Adjust as needed */
+}
+
+.model-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    margin: auto;
+    transition: transform 0.5s ease;
+}
+.image-container {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+    padding: 0;
+}
+
+.model-viewer-container {
+    flex: 2; /* 20% of the space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+    padding: 0;
+}
+
+.image-container img{
+    width: 100%;
+    height: auto;
+}
+
+.model-viewer-container model-viewer {
+    width: 100%;
+    height: 21vw;
+}
+
+/* Paragraph (caption) styling */
+.image-container p, .model-viewer-container p {
+    margin-top: 0px;
+    text-align: center;
+    color: grey;
+}
+
+
+.model-single-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.model-single-container {
+    flex: 0 0 40%; /* 40% of the parent container */
+}
+
+.model-single-container model-viewer {
+    width: 100%; /* Full width of its container */
+    height: 21vw; /* Set a specific height, adjust as needed */
+}
+
+.model-single-container p {
+    color: grey;
+}
+.responsive-div {
+    margin: 0 auto;
+    display: block;
+    width: 50%;
+}
+.large-plus {
+    font-size: 50px; /* Adjust the size as needed */
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .highlight {
+    animation: pulse 2s infinite;
+    /* color: #FF5733; change color as needed */
+    font-weight: bold;
+  }
+@media (max-width: 1290px) {
+    /* .model-container model-viewer {
+        width: 15vw;
+        height: 15vh;
+        max-height: 140px;
+    } */
+    .image-container p {
+        font-size: 12px;
+    }
+    .model-viewer-container p {
+        font-size: 6px;
+    }
+    .editing-text {
+        font-size: 12px;
+    }
+    .model-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 93%;
+        margin: auto;
+        transition: transform 0.5s ease;
+    }
+    .model-viewer-container model-viewer {
+    width: 100%;
+    height: 27vw;
+}
+.model-single-container model-viewer {
+    width: 100%;
+    height: 28vw;
+}
+.model-single-container p {
+    font-size: 6px;
+}
+.responsive-div {
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+}
+}
