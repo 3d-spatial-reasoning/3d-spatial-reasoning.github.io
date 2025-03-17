@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>ImageNet3D</title>
+        <title>3D Spatial Reasoning</title>
         <script src="template.v2.js"></script>
         <link rel="icon" href="assets/jhu.png" type="image/png" sizes="128x128">
         <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
@@ -67,469 +67,75 @@
     <body>
         <div class="header-container">
             <div class="header-content">
-              <h1>ImageNet3D: Towards General-Purpose Object-Level 3D Understanding</h1>
-              <h3>NeurIPS 2024</h3>
-              <p>
-                <a href="https://wufeim.github.io" target="_blank" style="text-decoration: none;">Wufei Ma<sup>1</sup></a> &emsp;
-                <a href="https://openreview.net/profile?id=~Guofeng_Zhang4" target="_blank" style="text-decoration: none;">Guofeng Zhang<sup>1</sup></a> &emsp;
-                <a href="https://qihao067.github.io/" target="_blank"  style="text-decoration: none;">Qihao Liu<sup>1</sup></a> &emsp;
-                <a href="https://scholar.google.com/citations?user=SU6ooAQAAAAJ&hl=en" target="_blank" style="text-decoration: none;">Guanning Zeng<sup>2</sup></a> &emsp;
-                <br>
-                <a href="https://adamkortylewski.com/" target="_blank" style="text-decoration: none;">Adam Kortylewski<sup>3,4</sup></a> &emsp;
-                <a href="https://www.cs.jhu.edu/~yyliu/" target="_blank" style="text-decoration: none;">Yaoyao Liu<sup>1</sup></a> &emsp;
-                <a href="https://www.cs.jhu.edu/~ayuille/" target="_blank" style="text-decoration: none;">Alan Yuille<sup>1</sup></a>
-                <br>
-                <br>
-                <a href="https://www.jhu.edu" target="_blank" style="text-decoration: none;"><sup>1</sup>Johns Hopkins University</a> &emsp;
-                <a href="https://www.tsinghua.edu.cn/en/" target="_blank" style="text-decoration: none;"><sup>2</sup>Tsinghua University</a> &emsp;
-                <br>
-                <a href="https://uni-freiburg.de/en/" target="_blank" style="text-decoration: none;"><sup>3</sup>University of Freiburg</a> &emsp;
-                <a href="https://www.mpi-inf.mpg.de/home" target="_blank" style="text-decoration: none;"><sup>4</sup>Max Planck Institute for Informatics</a> &emsp;
-              </p>
-              <div class="button-container">
+              <h1>Advancing Spatial Reasoning</h1>
+              <h3>Spatial Reasoning Team at <a href="https://ccvl.jhu.edu">CCVL</a>@<a href="https://www.jhu.edu">JHU</a></h3>
+              <!-- <div class="button-container">
                 <a href="http://arxiv.org/abs/2406.09613" class="button" target="_blank">arXiv</a>
                 <a href="https://github.com/wufeim/imagenet3d" class="button" target="_blank">Data</a>
                 <a href="https://github.com/wufeim/imagenet3d_exp" class="button" target="_blank">Code</a>
-              </div>
+              </div> -->
             </div>
         </div>
     <d-article>
-        <d-contents>
+        <d-contents style="margin-top: 0px;">
             <nav>
                 <h4>Contents</h4>
-                <div><a href="#data">ImageNet3D</a></div>
-                <div><a href="#tasks">Tasks</a></div>
-                <div><a href="#baseline">Baseline Results</a></div>
-                <div><a href="#discussion">Discussion</a></div>
+                <div><a href="#pub">Publications</a></div>
+                <div><a href="#team">Team</a></div>
+                <div><a href="#misc">Misc.</a></div>
             </nav>
         </d-contents>
 
         <p style="text-align: justify;">
-            We present <b>ImageNet3D</b>, a large dataset for general-purpose object-level 3D understanding. ImageNet3D augments 200 categories from the ImageNet dataset with 2D bounding box, 3D pose, 3D location annotations, and image captions interleaved with 3D information. With the new annotations available in ImageNet3D, we could (i) analyze the object-level 3D awareness of visual foundation models, (ii) study and develop general-purpose models that infer both 2D and 3D information for arbitrary rigid objects in natural images, and (iii) integrate unified 3D models with large language models for 3D-related reasoning. We consider two new tasks, probing of object-level 3D awareness and open vocabulary pose estimation, besides standard classification and pose estimation.
+            Advancing spatial reasoning of large multi-modal models.
         </p>
-        <p>
-            <d-figure>
-                <figure>
-                    <img src="assets/images/imagenet3d.png" alt="ImageNet3D overview" style="max-height: 360px; object-fit: contain;">
-                    <figcaption>
-                        <b>Figure 1.</b> Overview of our ImageNet3D dataset.
-                    </figcaption>
-                </figure>
-            </d-figure>
-        </p>
+        <!-- <d-figure>
+            <figure>
+                <img src="assets/images/imagenet3d.png" alt="ImageNet3D overview" style="max-height: 360px; object-fit: contain;">
+                <figcaption>
+                    <b>Figure 1.</b> Overview of our ImageNet3D dataset.
+                </figcaption>
+            </figure>
+        </d-figure> -->
 
-        <section id="data">
-            <h2 id="data">ImageNet3D</h2>
-            <h3>Motivation</h3>
+        <section id="pub">
+            <h2 id="pub">Publications</h2>
             <p style="text-align: justify;">
-                Despite the importance of object-level 3D understanding, previous datasets in this area were limited to a very small number of categories <d-cite key="xiang2014beyond,fu2022category,zhao2022ood"></d-cite> or specific domains. It is largely understudied of how to develop unified 3D models that are capable of inferring 2D and 3D information for all common rigid objects in natural images.
-            </p>
-            <p style="text-align: justify;">
-                We consider two types of unified 3D models.
-                <ul>
-                    <li><b>(i) Pretrained vision encoders with object-level 3D awareness.</b> Vision encoders from MAE <d-cite key="MaskedAutoencoders2021"></d-cite>, DINO <d-cite key="caron2021emerging"></d-cite>, CLIP <d-cite key="radford2021learning"></d-cite>, etc. are pretrained with self-supervised or weakly-supervised objectives. By learning a 3D discriminative representation, these vision encoders can be integrated into vision systems and benefit downstream recognition and reasoning. <b>While these encoders are found useful for 3D-related dense prediction tasks <d-cite key="banani2024probing"></d-cite>, their object-level 3D awareness remains unclear.</b></li>
-                    <li><b>(ii) Supervised 3D models.</b> By training on a large number of diverse data with 3D annotations, these models may achieve a stronger robustness and generalization ability. <b>However, there has been a lack of large-scale 3D datasets with a wide range of rigid categories, which constrains us from developing large unified 3D models for rigid objects or study the generalization and emerging properties of these models.</b></li>
-                </ul>
-            </p>
-            <h3>Overview</h3>
-            <p style="text-align: justify;">
-                We choose the ImageNet21k dataset <d-cite key="deng2009imagenet"></d-cite> as the source of our image data. We start by annotating 2D bounding boxes for the object instances in the image. Then we collect 3D CAD models from Objaverse <d-cite key="objaverse"></d-cite> as representative shapes for each object category. Finally we recurit a total of 30 annotators to annotate 6D poses for the objects, as well as the scene density and object visual quality.
+                <b>SpatialLMM: A Compound 3D-Informed Design toward Spatially-Intelligent Large Multimodal Models</b><br/>
+                Wufei Ma, Luoxin Ye, Celso M de Melo, Alan Yuille, Jieneng Chen<br/>
+                In <em>IEEE/CVF Conference on Computer Vision and Pattern Recognition</em>, 2025
             </p>
             <p style="text-align: justify;">
-                Our dataset features three key designs: (i) a large-number of categories and instances, (ii) cross-category 3D alignment, and (iii) natural captions interleaved with 3D information.
-            </p>
-            <h3 id="data-collection">Cross-Category 3D Alignment</h3>
-            <p style="text-align: justify;">
-                In previous datasets such as ObjectNet3D <d-cite key="xiang2016objectnet3d"></d-cite>, canonical poses from different categories are not necessarily aligned. However, <b>as we scale up the number of categories in 3D-annotated datasets, having cross-category 3D alignment is a crucial design for the study of general-purpose object-level 3D understanding.</b> Correctly aligning the canonical poses will (i) allow models to utilize the semantic similarities between parts of different categories and exploit the benefits of joint learning from multiple categories, and (ii) generalize to novel categories by inferring 3D viewpoints from semantic parts that the model has seen from other categories during training.
+                <b>PulseCheck457: A Diagnostic Benchmark for Comprehensive Spatial Reasoning of Large Mutimodal Models</b><br/>
+                Xingrui Wang, Wufei Ma, Tiezheng Zhang, Celso M de Melo, Jieneng Chen, Alan Yuille<br/>
+                In <em>IEEE/CVF Conference on Computer Vision and Pattern Recognition</em>, 2025
             </p>
             <p style="text-align: justify;">
-                We manually align the canonical poses of all 200 categories in ImageNet3D, based on the following three rules: (i) semantic parts, (ii) similar shapes, and (iii) common knowledge.
-            </p>
-            <p>
-                <d-figure>
-                    <figure>
-                        <img src="assets/images/misaligned.png" alt="mis-aligned canonical poses in ObjectNet3D" style="max-height: 200px; object-fit: contain;">
-                        <figcaption>
-                            <b>Figure 2.</b> Mis-aligned canonical poses in ObjectNet3D <d-cite key="xiang2016objectnet3d"></d-cite>.
-                        </figcaption>
-                    </figure>
-                </d-figure>
-            </p>
-            <p>
-                <d-figure>
-                    <figure>
-                        <img src="assets/images/meta_classes.png" alt="cross-category 3D alignment" style="max-height: 360px; object-fit: contain;">
-                        <figcaption>
-                            <b>Figure 3.</b> Meta classes and cross-category 3D alignment in our ImageNet3D.
-                        </figcaption>
-                    </figure>
-                </d-figure>
-            </p>
-            <h3>Natural Captions with 3D Information</h3>
-            <p style="text-align: justify;">
-                An important application of general-purpose object-level 3D understanding models is to integrate them with large language models (LLMs) and benefit downstream multi-modal reasoning. Hence we present image captions interleaved with 3D information, which can be used to develop multi-modal large language models (MLLMs) with 3D reasoning capabilities similar to previous approaches <d-cite key="feng2024chatpose,lai2023lisa"></d-cite>.
-            </p>
-            <p style="text-align: justify;">
-                We adopt a GPT-assisted approach to produce natural captions with 3D information. By feeding our 2D and 3D annotations via the textual prompts, GPT-4v would integrate these information and produce a coherent image caption interleaved with 3D annotations represented by a special &lt;pose6D&gt; token.
+                <b><a href="https://3dsrbench.github.io" style="color: #002D72;">3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark</a></b><br/>
+                Wufei Ma, Haoyu Chen, Guofeng Zhang, Celso M de Melo, Alan Yuille, Jieneng Chen<br/>
+                Technical Report, 2024
             </p>
         </section>
 
-        <section id="tasks">
-            <h2 id="tasks">Tasks</h2>
-            Besides <span class="task1">standard 3D/6D pose estimation and image classification</span> as studied in prior works <d-cite key="ma2022robust,jesslen2023robust"></d-cite>, we further consider two new tasks, <span class="task2">probing of 3D object-level awareness</span> and <span class="task3">open-vocabulary pose estimation</span>.
-            <h3 class="task2">Linear Probing of Object-Level 3D Awareness</h3>
+        <section id="team">
+            <h2 id="team">Team</h2>
             <p style="text-align: justify;">
-                Recent developments of large-scale pretraining have yielded visual foundation models with strong capabilities. Self-supervised approaches such as MAE <d-cite key="MaskedAutoencoders2021"></d-cite> and DINO <d-cite key="caron2021emerging"></d-cite> provide strong and generalizable feature representations that benefit downstream recognition and localization. <b>Are these visual foundation models object-level 3D aware? Can these feature representations distinguish objects from different 3D viewpoints or retrieve objects from similar 3D viewpoints?</b>
-            </p>
-            <p style="text-align: justify;">
-                We evaluate object-level 3D awareness by linear probing the frozen feature representations on 3D viewpoint classification task. Specifically, three linear classifiers are trained with respect to each of the three parameters encoding 3D viewpoint.
-            </p>
-            <p style="text-align: justify;">
-                We compute <b>pose errors</b> given by the angle between the predicted rotation matrix and the groundtruth rotation matrix <d-cite key="zhou2018starmap"></d-cite>, and report <b>pose estimation accuracy</b>, which is the percentage of samples with pose errors smaller than a pre-defined threshold.
-            </p>
-            <h3 class="task3">Open-Vocabulary Pose Estimation</h3>
-            <p style="text-align: justify;">
-                In this setting, we study how 3D models generalize to novel categories. Models may utilize semantic parts that are shared between novel categories and categories that are seen during training. Additionally, open-vocabulary pose estimation models may utilize large-scale 2D pre-training data or vision-language supervision and learn useful semantic information. Lastly we provide detailed descriptions of object shape, part structure, and how humans interact with these objects for all categories in ImageNet3D.
-            </p>
-            <p>
-                <d-figure>
-                    <figure>
-                        <img src="assets/images/open_vocab.png" alt="open-vocabulary pose estimation">
-                        <figcaption>
-                            <b>Figure 4.</b> Illustration of open-vocabulary pose estimation.
-                        </figcaption>
-                    </figure>
-                </d-figure>
+                <b>Core contributors:</b> <a href="https://wufeim.github.io">Wufei Ma</a>, <a href="https://sites.google.com/view/yu-cheng-chou">Yu-Cheng Chou</a>, <a href="https://xingruiwang.github.io">Xingrui Wang</a>, <a href="https://qihao067.github.io">Qihao Liu</a><br/>
+                <b>Advising:</b> <a href="https://beckschen.github.io">Jieneng Chen</a><br/>
+                <b>Professor:</b> <a href="https://www.cs.jhu.edu/~ayuille/">Alan Yuille</a>
             </p>
         </section>
 
-        <section id="baseline">
-            <h2 id="baseline">Baseline Results</h2>
-            <h3 class="task2">Task 1: Linear Probing of Object-Level 3D Awareness</h3>
+        <section id="misc">
+            <h2 id="misc">Miscellaneous</h2>
             <p style="text-align: justify;">
-                We measure the object-level 3D awareness for a range of general-purpose vision models designed for representation learning <d-cite key="Touvron2022DeiTIR,MaskedAutoencoders2021,caron2021emerging,oquab2023dinov2"></d-cite>, multi-modal learning <d-cite key="radford2021learning"></d-cite>, and depth estimation <d-cite key="Ranftl2022"></d-cite>. These models adopt standard transformer architectures and we train a linear probe on frozen class embedding features.
-            </p>
-            <div id="tab:model_ensemble" style="display: flex; flex-direction: column; align-items: center;">
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                        <tr>
-                            <th colspan="1" class="tb-hdr">Model</th>
-                            <th colspan="1" class="tb-hdr">Arch</th>
-                            <th colspan="1" class="tb-hdr">Supervision</th>
-                            <th colspan="1" class="tb-hdr">Dataset</th>
-                            <th colspan="8" class="tb-hdr">Pose Accuracy @ pi/6</th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th>Avg.</th>
-                            <th>Elec.</th>
-                            <th>Furn.</th>
-                            <th>Hou.</th>
-                            <th>Mus.</th>
-                            <th>Spo.</th>
-                            <th>Veh.</th>
-                            <th>Work</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>DeiT III <d-cite key="Touvron2022DeiTIR"></d-cite></td>
-                            <td>ViT-B/16</td>
-                            <td>classification</td>
-                            <td>ImageNet21k</td>
-                            <td>36.6</td>
-                            <td>47.9</td>
-                            <td>48.2</td>
-                            <td>36.8</td>
-                            <td>21.5</td>
-                            <td>16.6</td>
-                            <td>35.0</td>
-                            <td>25.3</td>
-                        </tr>
-                        <tr>
-                            <td>MAE <d-cite key="MaskedAutoencoders2021"></d-cite></td>
-                            <td>ViT-B/16</td>
-                            <td>SSL</td>
-                            <td>ImageNet1k</td>
-                            <td><u>46.6</u></td>
-                            <td><u>57.6</u></td>
-                            <td><u>67.8</u></td>
-                            <td><u>40.2</u></td>
-                            <td><u>29.0</u></td>
-                            <td><u>20.2</u></td>
-                            <td><u>58.4</u></td>
-                            <td>25.6</td>
-                        </tr>
-                        <tr>
-                            <td>DINO <d-cite key="caron2021emerging"></d-cite></td>
-                            <td>ViT-B/16</td>
-                            <td>SSL</td>
-                            <td>ImageNet1k</td>
-                            <td>42.0</td>
-                            <td>53.1</td>
-                            <td>57.0</td>
-                            <td>39.8</td>
-                            <td>28.0</td>
-                            <td>19.3</td>
-                            <td>45.3</td>
-                            <td>27.0</td>
-                        </tr>
-                        <tr>
-                            <td>DION v2 <d-cite key="oquab2023dinov2"></d-cite></td>
-                            <td>ViT-B/14</td>
-                            <td>SSL</td>
-                            <td>LVD-142M</td>
-                            <td class="highlight">56.3</td>
-                            <td class="highlight">64.0</td>
-                            <td class="highlight">75.3</td>
-                            <td class="highlight">47.9</td>
-                            <td class="highlight">32.9</td>
-                            <td class="highlight">23.5</td>
-                            <td class="highlight">74.7</td>
-                            <td class="highlight">38.1</td>
-                        </tr>
-                        <tr>
-                            <td>CLIP <d-cite key="radford2021learning"></d-cite></td>
-                            <td>ViT-B/16</td>
-                            <td>VLM</td>
-                            <td><i>private</i></td>
-                            <td>39.7</td>
-                            <td>50.3</td>
-                            <td>52.8</td>
-                            <td>39.7</td>
-                            <td>23.1</td>
-                            <td>19.3</td>
-                            <td>39.8</td>
-                            <td>26.4</td>
-                        </tr>
-                        <tr>
-                            <td>MiDaS <d-cite key="Ranftl2022"></d-cite></td>
-                            <td>ViT-L/16</td>
-                            <td>depth</td>
-                            <td>MIX-6</td>
-                            <td>40.5</td>
-                            <td>50.9</td>
-                            <td>56.7</td>
-                            <td><u>40.2</u></td>
-                            <td>26.7</td>
-                            <td>18.9</td>
-                            <td>39.2</td>
-                            <td><u>28.1</u></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
-                    <b>Table 1.</b> Quantitative results of linear probing of object-level 3D awareness.
-                </figcaption>
-            </div>
-            <h3 class="task3">Task 2: Open-Vocabulary Pose Estimation</h3>
-            <p style="text-align: justify;">
-                For baseline results, we consider models that learn category-agnostic features that generalize to novel categories and instances. Specifically, we consider (i) classification-based methods that formulate pose estimation as a classification problem, and (ii) 3D compositional models that learn neural mesh models with contrastive features and perform analysis-by-synthesis during inference. The implementation of 3D compositional models extends from <d-cite key="jesslen2023robust"></d-cite>.
-            </p>
-            <div id="tab:model_ensemble" style="display: flex; flex-direction: column; align-items: center;">
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                        <tr>
-                            <th colspan="1" class="tb-hdr">Model</th>
-                            <th colspan="8" class="tb-hdr">Pose Accuracy @ pi/6</th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th>Avg.</th>
-                            <th>Elec.</th>
-                            <th>Furn.</th>
-                            <th>Hou.</th>
-                            <th>Mus.</th>
-                            <th>Spo.</th>
-                            <th>Veh.</th>
-                            <th>Work</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><b><i>Oracle Model</i></b></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>ResNet50-General</td>
-                                <td>53.6</td>
-                                <td>49.2</td>
-                                <td>52.4</td>
-                                <td>45.8</td>
-                                <td>26.0</td>
-                                <td>65.2</td>
-                                <td>56.5</td>
-                                <td>58.5</td>
-                            </tr>
-                            <tr>
-                                <td><b><i>Open-Vocabulary Models</i></b></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>ResNet50-General</td>
-                                <td class="highlight">37.1</td>
-                                <td>30.1</td>
-                                <td class="highlight">35.6</td>
-                                <td class="highlight">28.1</td>
-                                <td>11.8</td>
-                                <td class="highlight">51.7</td>
-                                <td class="highlight">36.7</td>
-                                <td class="highlight">40.9</td>
-                            </tr>
-                            <tr>
-                                <td>SwinTrans-T-General</td>
-                                <td><u>35.8</u></td>
-                                <td><u>30.9</u></td>
-                                <td><u>34.3</u></td>
-                                <td><u>26.1</u></td>
-                                <td><u>12.2</u></td>
-                                <td><u>46.2</u></td>
-                                <td><u>34.4</u></td>
-                                <td><u>39.2</u></td>
-                            </tr>
-                            <tr>
-                                <td>NMM-Sphere</td>
-                                <td>29.5</td>
-                                <td class="highlight">31.7</td>
-                                <td>25.4</td>
-                                <td>21.7</td>
-                                <td class="highlight">25.6</td>
-                                <td>19.8</td>
-                                <td>33.4</td>
-                                <td>19.3</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
-                    <b>Table 2.</b> Quantitative results of open-vocabulary pose estimation. Note that the oracle model is trained on both known and novel categories.
-                </figcaption>
-            </div>
-            <h3 class="task1">Task 3: Joint Image Clasification and Pose Estimation</h3>
-            <p style="text-align: justify;">
-                Similar to task 2, we consider two types of models: (i) classification-based methods, and (ii) 3D compositional models. We adopt a <b>3D-aware classification accuracy</b>, where a prediction is correct only if the predicted class label is correct and the predicted pose error is lower than a given threshold.
-            </p>
-            <div id="tab:model_ensemble" style="display: flex; flex-direction: column; align-items: center;">
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                        <tr>
-                            <th colspan="1" class="tb-hdr">Model</th>
-                            <th colspan="8" class="tb-hdr">3D-Aware Pose Accuracy @ pi/6</th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th>Avg.</th>
-                            <th>Elec.</th>
-                            <th>Furn.</th>
-                            <th>Hou.</th>
-                            <th>Mus.</th>
-                            <th>Spo.</th>
-                            <th>Veh.</th>
-                            <th>Work</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>ResNet50-General</td>
-                                <td>50.9</td>
-                                <td>60.0</td>
-                                <td><u>67.2</u></td>
-                                <td>43.0</td>
-                                <td>43.8</td>
-                                <td>27.7</td>
-                                <td>64.1</td>
-                                <td>33.8</td>
-                            </tr>
-                            <tr>
-                                <td>SwinTrans-T-General</td>
-                                <td>53.2</td>
-                                <td class="highlight">63.1</td>
-                                <td class="highlight">71.6</td>
-                                <td>44.8</td>
-                                <td><u>45.3</u></td>
-                                <td>30.4</td>
-                                <td>66.2</td>
-                                <td>35.0</td>
-                            </tr>
-                            <tr>
-                                <td>LLaVA-pose <d-cite key="liu2024visual"></d-cite></td>
-                                <td>49.1</td>
-                                <td>58.0</td>
-                                <td>65.6</td>
-                                <td>41.6</td>
-                                <td>41.0</td>
-                                <td>26.1</td>
-                                <td>61.8</td>
-                                <td>32.1</td>
-                            </tr>
-                            <tr>
-                                <td>NOVUM <d-cite key="jesslen2023robust"></d-cite></td>
-                                <td><u>56.2</u></td>
-                                <td>59.6</td>
-                                <td>65.6</td>
-                                <td class="highlight">52.5</td>
-                                <td>41.9</td>
-                                <td><u>30.6</u></td>
-                                <td class="highlight">69.6</td>
-                                <td><u>39.3</u></td>
-                            </tr>
-                            <tr>
-                                <td>NMM-Sphere</td>
-                                <td class="highlight">57.4</td>
-                                <td><u>61.3</u></td>
-                                <td>65.9</td>
-                                <td><u>52.4</u></td>
-                                <td class="highlight">51.7</td>
-                                <td class="highlight">40.5</td>
-                                <td><u>67.9</u></td>
-                                <td class="highlight">43.4</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
-                    <b>Table 3.</b> Quantitative results of joint image classification and pose estimation.
-                </figcaption>
-            </div>
-        </section>
-
-        <section id="discussion">
-            <h2 id="discussion">Discussion</h2>
-            <p style="text-align: justify;">
-                <b>Conclusion.</b> In this paper we present ImageNet3D, a large dataset for general-purpose object-level 3D understanding. ImageNet3D largely extends the number of rigid categories and object instances, as compared to previous datasets with 3D annotations. Moreover, ImageNet3D improves the quality of 3D annotations by annotating cross-category 3D alignment, and provides new types of annotations, such as object visual qualities and image captions interleaved with 3D information that enable new research problems. We provide baseline results on standard 3D tasks, as well as novel tasks such as probing of object-level 3D awareness and open-vocabulary pose estimation.
-            </p>
-            <p style="text-align: justify;">
-                Experimental results show that with ImageNet3D, we can develop general-purpose models capable of inferring 3D information for a wide range of rigid categories. We also identify limitations of existing 3D models from our baseline experiments and discuss new problems and challenges for future studies.
-            </p>
-            <p style="text-align: justify;">
-                <b>Ethics.</b> We follow the ethics guidelines and obtained Institutional Review Board (IRB) approvals prior to the start of our work. We described potential risks to the annotators, such as being exposed to inappropriate images from the ImageNet21k dataset <d-cite key="deng2009imagenet"></d-cite>, and explained the purpose of the study and how the collected data will be used. All annotators are paid by a fair amount as required at our institution.
+                If you would like to join our team or would like to collaborate, please contact <a href="https://wufeim.github.io">Wufei Ma</a> and <a href="https://beckschen.github.io">Jieneng Chen</a>.
             </p>
         </section>
 
         </d-article>
         <d-appendix>
-            <h3>BibTeX</h3>
+            <!-- <h3>BibTeX</h3>
             <p class="bibtex">
                 @article{ma2024imagenet3d,<br>
                 &nbsp;&nbsp;title={ImageNet3D: Towards General-Purpose Object-Level 3D Understanding},<br>
@@ -537,7 +143,7 @@
                 &nbsp;&nbsp;journal={arXiv preprint arXiv:2406.09613},<br>
                 &nbsp;&nbsp;year={2024}<br>
                 }
-            </p>
+            </p> -->
 
             <h3>Notes</h3>
             <p>This website template is adapted from <a href="https://image-sculpting.github.io">Image Sculpting</a>.</p>
